@@ -2,7 +2,7 @@ package com.example.blackonyx.local
 
 import com.example.blackonyx.domain.Note
 
-class InMemoryDatabase: LocalDatabase {
+object InMemoryDatabase: LocalDatabase {
   private val notes = mutableListOf<Note>()
 
   init {

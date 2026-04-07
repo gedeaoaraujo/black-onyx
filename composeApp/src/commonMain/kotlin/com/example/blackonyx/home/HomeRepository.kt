@@ -5,7 +5,7 @@ import com.example.blackonyx.local.LocalDatabase
 import com.example.blackonyx.domain.Note
 
 class HomeRepository(
-  val database: LocalDatabase = InMemoryDatabase()
+  val database: LocalDatabase = InMemoryDatabase
 ) {
 
   suspend fun getAllNotes(): List<Note> {
