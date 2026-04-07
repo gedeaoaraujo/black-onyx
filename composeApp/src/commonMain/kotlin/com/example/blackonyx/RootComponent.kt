@@ -36,7 +36,7 @@ fun RootComponent(
 ) {
   val navController = rememberNavController()
   val state by viewModel.state.collectAsStateWithLifecycle()
-  val navBackStackEntry by navController.currentBackStackEntryAsState()
+  val backStackEntry by navController.currentBackStackEntryAsState()
 
   LaunchedEffect(Unit){
     viewModel.onAction(HomeIntent.LoadAllNotes)
@@ -54,7 +54,7 @@ fun RootComponent(
         )
       },
       floatingActionButton = {
-        if (navBackStackEntry?.destination?.route == "home"){
+        if (backStackEntry isRoute HOME_SCREEN){
           FloatingActionButton(
             containerColor = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.size(60.dp),
