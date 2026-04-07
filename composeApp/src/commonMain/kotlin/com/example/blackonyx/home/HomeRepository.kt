@@ -11,4 +11,8 @@ class HomeRepository(
   suspend fun getAllNotes(): List<Note> {
     return database.getAllNotes()
   }
+
+  suspend fun createNewNote() {
+    database.createNewNote()
+  }
 }

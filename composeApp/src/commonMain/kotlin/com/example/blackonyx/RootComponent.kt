@@ -49,7 +49,9 @@ fun RootComponent(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = {}
+          onClick = {
+            viewModel.onAction(HomeIntent.CreateNewNote)
+          }
         ){
           Text("+", color = MaterialTheme.colorScheme.onPrimary)
         }

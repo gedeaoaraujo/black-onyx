@@ -13,4 +13,8 @@ class InMemoryDatabase: LocalDatabase {
     return notes.toList()
   }
 
+  override suspend fun createNewNote() {
+    notes.add(Note(description = "x".repeat(255)))
+  }
+
 }
