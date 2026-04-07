@@ -21,18 +21,21 @@ fun ListItem(
       .background(MaterialTheme.colorScheme.primaryContainer)
   ){
     Text(
-      item.title,
+      maxLines = 1,
+      text = item.title,
       color = MaterialTheme.colorScheme.onPrimary,
       style = MaterialTheme.typography.titleMedium,
     )
     Text(
-      item.date,
+      maxLines = 1,
+      text = item.date,
       color = MaterialTheme.colorScheme.onPrimary,
     )
     Text(
-      item.description,
+      maxLines = 3,
+      text = item.description,
       color = MaterialTheme.colorScheme.onPrimary,
-      style = MaterialTheme.typography.bodyLarge
+      style = MaterialTheme.typography.bodyLarge,
     )
   }
 }
