@@ -55,7 +55,8 @@ fun RootComponent(
         ){
           Text("+", color = MaterialTheme.colorScheme.onPrimary)
         }
-      }
+      },
+      containerColor = MaterialTheme.colorScheme.primaryContainer
     ) { innerPadding ->
       HomeScreen(
         state.notes,
