@@ -18,6 +18,7 @@ import com.example.blackonyx.domain.Note
 @Composable
 fun HomeScreen(
   notes: List<Note> = listOf(),
+  onClickItem: (Int) -> Unit = {},
   modifier: Modifier = Modifier,
 ) {
   Box {
@@ -32,7 +33,7 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(4.dp),
       ) {
         items(notes){ item ->
-          ListItem(item = item)
+          ListItem(item = item, onClickItem = { onClickItem(it) })
         }
       }
     }

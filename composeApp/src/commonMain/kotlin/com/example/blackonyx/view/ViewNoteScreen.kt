@@ -17,13 +17,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ViewNote(
+  noteId: Int = 0,
   modifier: Modifier = Modifier,
   viewModel: ViewNoteViewModel = ViewNoteViewModel()
 ){
   val state by viewModel.state.collectAsStateWithLifecycle()
 
   LaunchedEffect(Unit){
-    viewModel.onAction(ViewNoteIntent.LoadNote(0))
+    viewModel.onAction(ViewNoteIntent.LoadNote(noteId))
   }
 
   Column(

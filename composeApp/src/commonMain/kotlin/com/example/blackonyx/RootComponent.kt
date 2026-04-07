@@ -17,9 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.blackonyx.home.HomeIntent
 import com.example.blackonyx.home.HomeScreen
 import com.example.blackonyx.home.HomeViewModel
+import com.example.blackonyx.view.ViewNote
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,6 +34,7 @@ fun RootComponent(
   viewModel: HomeViewModel = HomeViewModel()
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
+  val navController = rememberNavController()
 
   LaunchedEffect(Unit){
     viewModel.onAction(HomeIntent.LoadAllNotes)
@@ -58,10 +65,30 @@ fun RootComponent(
       },
       containerColor = MaterialTheme.colorScheme.primaryContainer
     ) { innerPadding ->
-      HomeScreen(
-        state.notes,
-        Modifier.padding(innerPadding),
-      )
+      NavHost(
+        navController = navController,
+        startDestination = "home"
+      ){
+        composable("home") {
+          HomeScreen(
+            notes = state.notes,
+            modifier = Modifier.padding(innerPadding),
+            onClickItem = { id -> navController.navigate("view/$id") }
+          )
+        }
+        composable(
+          route = "view/{id}",
+          arguments = listOf(navArgument("id") {
+            type = NavType.LongType
+          })
+        ) { backStackEntry ->
+          val noteId = backStackEntry.savedStateHandle.get<Int>("id")?:0
+          ViewNote(
+            noteId = noteId,
+            modifier = Modifier.padding(innerPadding)
+          )
+        }
+      }
     }
   }
 }

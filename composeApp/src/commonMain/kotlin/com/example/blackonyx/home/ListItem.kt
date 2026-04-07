@@ -1,6 +1,7 @@
 package com.example.blackonyx.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -13,11 +14,13 @@ import com.example.blackonyx.domain.Note
 @Composable
 fun ListItem(
   modifier: Modifier = Modifier,
+  onClickItem: (Int) -> Unit = {},
   item: Note
 ) {
   Column(
     modifier
       .padding(16.dp)
+      .clickable(true) { onClickItem(item.id) }
       .background(MaterialTheme.colorScheme.primaryContainer)
   ){
     Text(
