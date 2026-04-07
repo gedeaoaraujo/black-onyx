@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.blackonyx.home.HomeIntent
@@ -33,8 +34,9 @@ import com.example.blackonyx.view.ViewNote
 fun RootComponent(
   viewModel: HomeViewModel = HomeViewModel()
 ) {
-  val state by viewModel.state.collectAsStateWithLifecycle()
   val navController = rememberNavController()
+  val state by viewModel.state.collectAsStateWithLifecycle()
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
 
   LaunchedEffect(Unit){
     viewModel.onAction(HomeIntent.LoadAllNotes)
@@ -52,15 +54,17 @@ fun RootComponent(
         )
       },
       floatingActionButton = {
-        FloatingActionButton(
-          containerColor = MaterialTheme.colorScheme.secondary,
-          modifier = Modifier.size(60.dp),
-          shape = CircleShape,
-          onClick = {
-            viewModel.onAction(HomeIntent.CreateNewNote)
+        if (navBackStackEntry?.destination?.route == "home"){
+          FloatingActionButton(
+            containerColor = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.size(60.dp),
+            shape = CircleShape,
+            onClick = {
+              viewModel.onAction(HomeIntent.CreateNewNote)
+            }
+          ){
+            Text("+", color = MaterialTheme.colorScheme.onPrimary)
           }
-        ){
-          Text("+", color = MaterialTheme.colorScheme.onPrimary)
         }
       },
       containerColor = MaterialTheme.colorScheme.primaryContainer
