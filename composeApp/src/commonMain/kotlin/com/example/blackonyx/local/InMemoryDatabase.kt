@@ -1,4 +1,6 @@
-package com.example.blackonyx
+package com.example.blackonyx.local
+
+import com.example.blackonyx.domain.Note
 
 class InMemoryDatabase: LocalDatabase {
   private val notes = mutableListOf<Note>()

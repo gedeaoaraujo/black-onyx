@@ -1,4 +1,4 @@
-package com.example.blackonyx
+package com.example.blackonyx.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.blackonyx.domain.Note
 
 @Composable
 fun ListItem(

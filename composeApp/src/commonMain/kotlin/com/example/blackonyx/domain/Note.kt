@@ -1,4 +1,4 @@
-package com.example.blackonyx
+package com.example.blackonyx.domain
 
 data class Note(
   val title: String = "This is a title",

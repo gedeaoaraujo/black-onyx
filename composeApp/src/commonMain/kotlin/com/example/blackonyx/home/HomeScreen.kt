@@ -1,4 +1,4 @@
-package com.example.blackonyx
+package com.example.blackonyx.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
