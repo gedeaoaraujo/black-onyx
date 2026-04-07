@@ -10,24 +10,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.blackonyx.domain.Note
 
 @Composable
 fun HomeScreen(
+  notes: List<Note> = listOf(),
   modifier: Modifier = Modifier,
-  viewModel: HomeViewModel = HomeViewModel()
 ) {
-  val state by viewModel.state.collectAsStateWithLifecycle()
-
-  LaunchedEffect(Unit){
-    viewModel.onAction(HomeIntent.LoadAllNotes)
-  }
-
   Box {
     Column(
       modifier = Modifier
@@ -39,7 +31,7 @@ fun HomeScreen(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(4.dp),
       ) {
-        items(state.notes){ item ->
+        items(notes){ item ->
           ListItem(item = item)
         }
       }

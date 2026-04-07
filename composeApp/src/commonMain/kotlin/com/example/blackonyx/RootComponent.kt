@@ -11,15 +11,28 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.blackonyx.home.HomeIntent
 import com.example.blackonyx.home.HomeScreen
+import com.example.blackonyx.home.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun RootComponent() {
+fun RootComponent(
+  viewModel: HomeViewModel = HomeViewModel()
+) {
+  val state by viewModel.state.collectAsStateWithLifecycle()
+
+  LaunchedEffect(Unit){
+    viewModel.onAction(HomeIntent.LoadAllNotes)
+  }
+
   BlackOnyxTheme {
     Scaffold(
       topBar = {
@@ -42,7 +55,10 @@ fun RootComponent() {
         }
       }
     ) { innerPadding ->
-      HomeScreen(Modifier.padding(innerPadding))
+      HomeScreen(
+        state.notes,
+        Modifier.padding(innerPadding),
+      )
     }
   }
 }
