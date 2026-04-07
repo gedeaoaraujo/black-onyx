@@ -20,9 +20,11 @@ object InMemoryDatabase: LocalDatabase {
   }
 
   override suspend fun createNewNote() {
+    val newId = notes.count()
     notes.add(Note(
-      id = notes.count(),
-      description = "x".repeat(255)
+      id = newId,
+      title = "This is a title $newId",
+      description = "x".repeat(1500)
     ))
   }
 
