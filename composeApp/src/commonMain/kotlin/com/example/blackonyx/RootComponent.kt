@@ -28,6 +28,10 @@ import com.example.blackonyx.home.HomeScreen
 import com.example.blackonyx.home.HomeViewModel
 import com.example.blackonyx.view.ViewNote
 
+const val HOME_SCREEN = "HOME"
+const val VIEW_SCREEN = "VIEW"
+const val APP_NAME = "Black Onyx"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
@@ -46,7 +50,7 @@ fun RootComponent(
     Scaffold(
       topBar = {
         TopAppBar(
-          title = { Text("Black Onyx") },
+          title = { Text(APP_NAME) },
           colors = TopAppBarDefaults.topAppBarColors().copy(
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary,
@@ -71,17 +75,17 @@ fun RootComponent(
     ) { innerPadding ->
       NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = HOME_SCREEN
       ){
-        composable("home") {
+        composable(HOME_SCREEN) {
           HomeScreen(
             notes = state.notes,
             modifier = Modifier.padding(innerPadding),
-            onClickItem = { id -> navController.navigate("view/$id") }
+            onClickItem = { id -> navController.navigate("$VIEW_SCREEN/$id") }
           )
         }
         composable(
-          route = "view/{id}",
+          route = "$VIEW_SCREEN/{id}",
           arguments = listOf(navArgument("id") {
             type = NavType.IntType
           })
