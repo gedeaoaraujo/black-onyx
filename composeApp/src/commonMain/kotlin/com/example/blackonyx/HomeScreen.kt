@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +23,10 @@ fun HomeScreen(
   viewModel: HomeViewModel = HomeViewModel()
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
+
+  LaunchedEffect(Unit){
+    viewModel.onAction(HomeIntent.LoadAllNotes)
+  }
 
   Box {
     Column(

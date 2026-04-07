@@ -9,23 +9,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class HomeState(
-  val notes: List<Note> = listOf()
-)
-
 class HomeViewModel(
   val repository: HomeRepository = HomeRepository(),
   val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel() {
 
-  var state = MutableStateFlow(HomeState())
-    private set
+  val state = MutableStateFlow(HomeState())
 
-  init {
-    getAllNotes()
+  fun onAction(action: HomeIntent) = when(action) {
+    HomeIntent.LoadAllNotes -> getAllNotes()
   }
 
-  fun getAllNotes() = viewModelScope.launch(ioDispatcher) {
+  private fun getAllNotes() = viewModelScope.launch(ioDispatcher) {
     val notes = repository.getAllNotes()
     state.update { it.copy(notes = notes) }
   }
