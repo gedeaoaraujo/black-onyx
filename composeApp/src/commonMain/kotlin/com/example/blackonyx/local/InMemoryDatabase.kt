@@ -19,6 +19,9 @@ object InMemoryDatabase: LocalDatabase {
       description = "x".repeat(255)
     ))
   }
+
+  override suspend fun getNote(id: Int): Note {
+    return notes.first { it.id == id }
   }
 
 }
