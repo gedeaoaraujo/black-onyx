@@ -79,7 +79,7 @@ fun RootComponent(
         composable(
           route = "view/{id}",
           arguments = listOf(navArgument("id") {
-            type = NavType.LongType
+            type = NavType.IntType
           })
         ) { backStackEntry ->
           val noteId = backStackEntry.savedStateHandle.get<Int>("id")?:0
