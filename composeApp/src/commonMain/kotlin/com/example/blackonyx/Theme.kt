@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val Dark = Color(0xFF000000)
-val DarkBlue = Color(0xFF000014)
-val WhiteBlue = Color(0xFF000028)
+val DarkBlue = Color(0xFF000028)
+val WhiteBlue = Color(0xFF00003C)
 
 val LightScheme = lightColorScheme(
   primary = DarkBlue,
