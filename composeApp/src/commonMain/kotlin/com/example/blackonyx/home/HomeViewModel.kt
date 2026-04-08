@@ -18,12 +18,6 @@ class HomeViewModel(
 
   fun onAction(action: HomeIntent) = when(action) {
     HomeIntent.LoadAllNotes -> getAllNotes()
-    HomeIntent.CreateNewNote -> createNewNote()
-  }
-
-  private fun createNewNote() = viewModelScope.launch(ioDispatcher) {
-    repository.createNewNote()
-    getAllNotes()
   }
 
   private fun getAllNotes() = viewModelScope.launch(ioDispatcher) {

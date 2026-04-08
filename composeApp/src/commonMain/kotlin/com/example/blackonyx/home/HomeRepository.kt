@@ -12,7 +12,4 @@ class HomeRepository(
     return database.getAllNotes()
   }
 
-  suspend fun createNewNote() {
-    database.createNewNote()
-  }
 }

@@ -19,15 +19,6 @@ object InMemoryDatabase: LocalDatabase {
     return notes.toList()
   }
 
-  override suspend fun createNewNote() {
-    val newId = notes.count()
-    notes.add(Note(
-      id = newId,
-      title = "This is a title $newId",
-      description = "x".repeat(1500)
-    ))
-  }
-
   override suspend fun getNote(id: Int): Note {
     return notes.first { it.id == id }
   }
