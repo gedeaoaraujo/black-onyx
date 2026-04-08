@@ -28,11 +28,14 @@ class CreateNoteViewModel(
   }
 
   private fun createNote() = viewModelScope.launch(ioDispatcher) {
-    repository.createNote(Note(
-      title = state.value.title,
-      date = state.value.date,
-      description = state.value.text
-    ))
+    if (state.value.title.isNotBlank()
+      && state.value.text.isNotBlank()){
+      repository.createNote(Note(
+        title = state.value.title,
+        date = state.value.date,
+        description = state.value.text
+      ))
+    }
   }
 
 }
