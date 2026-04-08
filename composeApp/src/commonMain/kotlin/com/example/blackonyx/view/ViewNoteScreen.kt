@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,9 +31,10 @@ fun ViewNote(
 
   Column(
     modifier
-      .padding(vertical = 32.dp, horizontal = 16.dp)
       .fillMaxSize()
-      .background(MaterialTheme.colorScheme.primaryContainer),
+      .verticalScroll(rememberScrollState())
+      .background(MaterialTheme.colorScheme.primaryContainer)
+      .padding(vertical = 32.dp, horizontal = 16.dp),
   ){
     Text(
       maxLines = 1,
