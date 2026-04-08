@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel(
   val repository: HomeRepository = HomeRepository(),
-  val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel() {
 
   val state: StateFlow<HomeState> = repository.getAllNotes()
