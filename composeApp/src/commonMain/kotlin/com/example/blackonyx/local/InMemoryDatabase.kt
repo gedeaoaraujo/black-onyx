@@ -32,4 +32,9 @@ object InMemoryDatabase: LocalDatabase {
     return notes.first { it.id == id }
   }
 
+  override suspend fun createNote(title: String, date: String, text: String) {
+    val note = Note(notes.count(), title, date, text)
+    notes.add(note)
+  }
+
 }
