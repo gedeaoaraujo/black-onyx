@@ -26,7 +26,7 @@ import androidx.navigation.navArgument
 import com.example.blackonyx.home.HomeIntent
 import com.example.blackonyx.home.HomeScreen
 import com.example.blackonyx.home.HomeViewModel
-import com.example.blackonyx.view.ViewNote
+import com.example.blackonyx.view.ViewNoteScreen
 
 const val HOME_SCREEN = "HOME"
 const val VIEW_SCREEN = "VIEW"
@@ -91,7 +91,7 @@ fun RootComponent(
           })
         ) { backStackEntry ->
           val noteId = backStackEntry.savedStateHandle.get<Int>("id")?:0
-          ViewNote(
+          ViewNoteScreen(
             noteId = noteId,
             modifier = Modifier.padding(innerPadding)
           )

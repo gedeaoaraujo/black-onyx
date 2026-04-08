@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun ViewNote(
+fun ViewNoteScreen(
   noteId: Int = 0,
   modifier: Modifier = Modifier,
   viewModel: ViewNoteViewModel = ViewNoteViewModel()
