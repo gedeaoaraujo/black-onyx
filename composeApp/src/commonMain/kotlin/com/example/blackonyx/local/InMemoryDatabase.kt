@@ -6,13 +6,14 @@ object InMemoryDatabase: LocalDatabase {
   private val notes = mutableListOf<Note>()
 
   init {
-    repeat(3){ id -> notes.add(
+    val initial = List(3){ id ->
       Note(
         id = id,
         title = "This is a title $id",
         description = "a".repeat(1500)
       )
-    )}
+    }
+    notes.addAll(initial)
   }
 
   override suspend fun getAllNotes(): List<Note> {
