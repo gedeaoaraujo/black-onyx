@@ -17,7 +17,6 @@ import com.example.blackonyx.domain.Note
 
 @Composable
 fun HomeScreen(
-  notes: List<Note> = listOf(),
   onClickItem: (Int) -> Unit = {},
   modifier: Modifier = Modifier,
 ) {

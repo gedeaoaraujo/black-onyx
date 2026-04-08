@@ -28,7 +28,6 @@ import com.example.blackonyx.create.CreateNoteIntent.UpdateTitle
 @Composable
 fun CreateNoteScreen(
   modifier: Modifier = Modifier,
-  onCreateNewNote: () -> Unit = {},
   viewModel: CreateNoteViewModel = viewModel()
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
@@ -36,7 +35,6 @@ fun CreateNoteScreen(
   DisposableEffect(Unit){
     onDispose {
       viewModel.onAction(CreateNoteIntent.CreateNote)
-      onCreateNewNote()
     }
   }
 

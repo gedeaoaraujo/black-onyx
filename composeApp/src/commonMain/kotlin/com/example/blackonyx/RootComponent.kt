@@ -15,13 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,9 +26,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.blackonyx.create.CreateNoteScreen
-import com.example.blackonyx.home.HomeIntent
 import com.example.blackonyx.home.HomeScreen
-import com.example.blackonyx.home.HomeViewModel
 import com.example.blackonyx.view.ViewNoteScreen
 
 const val HOME_SCREEN = "HOME"
@@ -42,16 +37,9 @@ const val APP_NAME = "Black Onyx"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun RootComponent(
-  viewModel: HomeViewModel = viewModel()
-) {
+fun RootComponent() {
   val navController = rememberNavController()
-  val state by viewModel.state.collectAsStateWithLifecycle()
   val backStackEntry by navController.currentBackStackEntryAsState()
-
-  LaunchedEffect(Unit){
-    viewModel.onAction(HomeIntent.LoadAllNotes)
-  }
 
   BlackOnyxTheme {
     Scaffold(
@@ -99,15 +87,13 @@ fun RootComponent(
       ){
         composable(HOME_SCREEN) {
           HomeScreen(
-            notes = state.notes,
             modifier = Modifier.padding(innerPadding),
             onClickItem = { id -> navController.navigate("$VIEW_SCREEN/$id") }
           )
         }
         composable(CREATE_SCREEN) {
           CreateNoteScreen(
-            modifier = Modifier.padding(innerPadding),
-            onCreateNewNote = { viewModel.onAction(HomeIntent.LoadAllNotes) }
+            modifier = Modifier.padding(innerPadding)
           )
         }
         composable(
