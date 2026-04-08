@@ -3,8 +3,12 @@ package com.example.blackonyx
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -56,7 +60,20 @@ fun RootComponent(
           colors = TopAppBarDefaults.topAppBarColors().copy(
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary,
-          )
+          ),
+          actions = {
+            if (backStackEntry isRoute CREATE_SCREEN) IconButton(
+              onClick = {
+                navController.popBackStack()
+              }
+            ){
+              Icon(
+                contentDescription = "Save Note",
+                imageVector = Icons.Default.Check,
+                tint = MaterialTheme.colorScheme.onPrimary
+              )
+            }
+          }
         )
       },
       floatingActionButton = {
