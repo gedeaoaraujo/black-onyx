@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.blackonyx.create.CreateNoteScreen
 import com.example.blackonyx.home.HomeIntent
 import com.example.blackonyx.home.HomeScreen
 import com.example.blackonyx.home.HomeViewModel
@@ -30,6 +31,7 @@ import com.example.blackonyx.view.ViewNoteScreen
 
 const val HOME_SCREEN = "HOME"
 const val VIEW_SCREEN = "VIEW"
+const val CREATE_SCREEN = "CREATE"
 const val APP_NAME = "Black Onyx"
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +66,7 @@ fun RootComponent(
             modifier = Modifier.size(60.dp),
             shape = CircleShape,
             onClick = {
-              viewModel.onAction(HomeIntent.CreateNewNote)
+              navController.navigate(CREATE_SCREEN)
             }
           ){
             Text("+", color = MaterialTheme.colorScheme.onPrimary)
@@ -82,6 +84,12 @@ fun RootComponent(
             notes = state.notes,
             modifier = Modifier.padding(innerPadding),
             onClickItem = { id -> navController.navigate("$VIEW_SCREEN/$id") }
+          )
+        }
+        composable(CREATE_SCREEN) {
+          CreateNoteScreen(
+            modifier = Modifier.padding(innerPadding),
+            onCreateNewNote = { viewModel.onAction(HomeIntent.LoadAllNotes) }
           )
         }
         composable(
