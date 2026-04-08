@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -42,7 +43,7 @@ const val APP_NAME = "Black Onyx"
 @Composable
 @Preview
 fun RootComponent(
-  viewModel: HomeViewModel = HomeViewModel()
+  viewModel: HomeViewModel = viewModel()
 ) {
   val navController = rememberNavController()
   val state by viewModel.state.collectAsStateWithLifecycle()

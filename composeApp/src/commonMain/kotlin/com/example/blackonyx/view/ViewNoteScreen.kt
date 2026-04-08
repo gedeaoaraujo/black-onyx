@@ -16,12 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun ViewNoteScreen(
   noteId: Int = 0,
   modifier: Modifier = Modifier,
-  viewModel: ViewNoteViewModel = ViewNoteViewModel()
+  viewModel: ViewNoteViewModel = viewModel()
 ){
   val state by viewModel.state.collectAsStateWithLifecycle()
 
