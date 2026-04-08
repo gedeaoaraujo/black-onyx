@@ -1,7 +1,9 @@
 package com.example.blackonyx.create
 
+import com.example.blackonyx.dateTimeNow
+
 data class CreateNoteState(
   val title: String = "",
-  val date: String = "01/01/2000 06:06",
-  val text: String = ""
+  val text: String = "",
+  val date: String = dateTimeNow()
 )
