@@ -104,16 +104,16 @@ fun CreateNoteScreen(
 
     if (state.showDialog){
       AlertDialog(
-        title = { Text("Message") },
+        title = { Text("Mensagem") },
         onDismissRequest = {},
         text = { Text("Você deseja voltar e descartar todas as alterações?") },
         confirmButton = {
-          TextButton(onClick = onBackPressed) { Text("Ok") }
+          TextButton(onClick = onBackPressed) { Text("Sim") }
         },
         dismissButton = {
           TextButton(onClick = {
             viewModel.onAction(CreateNoteIntent.ToggleDialog)
-          }) { Text("Cancelar") }
+          }) { Text("Não") }
         }
       )
     }
