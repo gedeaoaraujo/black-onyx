@@ -32,7 +32,8 @@ import com.example.blackonyx.create.CreateNoteIntent.UpdateTitle
 @Composable
 fun CreateNoteScreen(
   modifier: Modifier = Modifier,
-  viewModel: CreateNoteViewModel = viewModel()
+  onBackPressed: () -> Unit = {},
+  viewModel: CreateNoteViewModel = viewModel(),
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
   val navEventState = rememberNavigationEventState(currentInfo = NavigationEventInfo.None)
@@ -107,7 +108,7 @@ fun CreateNoteScreen(
         onDismissRequest = {},
         text = { Text("Você deseja voltar e descartar todas as alterações?") },
         confirmButton = {
-          TextButton(onClick = {}) { Text("Ok") }
+          TextButton(onClick = onBackPressed) { Text("Ok") }
         },
         dismissButton = {
           TextButton(onClick = {

@@ -93,7 +93,8 @@ fun RootComponent() {
         }
         composable(CREATE_SCREEN) {
           CreateNoteScreen(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            onBackPressed = navController::navigateUp
           )
         }
         composable(
