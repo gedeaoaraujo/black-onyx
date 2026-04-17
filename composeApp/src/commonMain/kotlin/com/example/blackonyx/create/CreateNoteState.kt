@@ -5,5 +5,6 @@ import com.example.blackonyx.dateTimeNow
 data class CreateNoteState(
   val title: String = "",
   val text: String = "",
-  val date: String = dateTimeNow()
+  val date: String = dateTimeNow(),
+  val showDialog: Boolean = false
 )

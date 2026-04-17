@@ -19,6 +19,9 @@ class CreateNoteViewModel(
 
   fun onAction(action: CreateNoteIntent) = when(action) {
     is CreateNoteIntent.CreateNote -> createNote()
+    is CreateNoteIntent.ToggleDialog -> state.update {
+      it.copy(showDialog = state.value.showDialog.not())
+    }
     is CreateNoteIntent.UpdateTitle -> state.update {
       it.copy(title = action.title)
     }

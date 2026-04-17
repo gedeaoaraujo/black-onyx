@@ -10,17 +10,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigationevent.NavigationEventInfo
+import androidx.navigationevent.compose.NavigationBackHandler
+import androidx.navigationevent.compose.rememberNavigationEventState
 import com.example.blackonyx.WhiteBlue
 import com.example.blackonyx.create.CreateNoteIntent.UpdateText
 import com.example.blackonyx.create.CreateNoteIntent.UpdateTitle
@@ -31,12 +35,15 @@ fun CreateNoteScreen(
   viewModel: CreateNoteViewModel = viewModel()
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
+  val navEventState = rememberNavigationEventState(currentInfo = NavigationEventInfo.None)
 
-  DisposableEffect(Unit){
-    onDispose {
-      viewModel.onAction(CreateNoteIntent.CreateNote)
+  NavigationBackHandler(
+    state = navEventState,
+    isBackEnabled = true,
+    onBackCompleted = {
+      viewModel.onAction(CreateNoteIntent.ToggleDialog)
     }
-  }
+  )
 
   Column(
     modifier
@@ -93,5 +100,21 @@ fun CreateNoteScreen(
         unfocusedIndicatorColor = MaterialTheme.colorScheme.primaryContainer,
       )
     )
+
+    if (state.showDialog){
+      AlertDialog(
+        title = { Text("Message") },
+        onDismissRequest = {},
+        text = { Text("Você deseja voltar e descartar todas as alterações?") },
+        confirmButton = {
+          TextButton(onClick = {}) { Text("Ok") }
+        },
+        dismissButton = {
+          TextButton(onClick = {
+            viewModel.onAction(CreateNoteIntent.ToggleDialog)
+          }) { Text("Cancelar") }
+        }
+      )
+    }
   }
 }
