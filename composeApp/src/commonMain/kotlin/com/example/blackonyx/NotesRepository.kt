@@ -1,0 +1,24 @@
+package com.example.blackonyx
+
+import com.example.blackonyx.domain.Note
+import com.example.blackonyx.local.InMemoryDatabase
+import com.example.blackonyx.local.LocalDatabase
+import kotlinx.coroutines.flow.Flow
+
+class NotesRepository(
+  val database: LocalDatabase = InMemoryDatabase
+) {
+
+  fun getAllNotes(): Flow<List<Note>> {
+    return database.getAllNotes()
+  }
+
+  suspend fun loadNote(id: Int): Note {
+    return database.getNote(id)
+  }
+
+  suspend fun createNote(note: Note) {
+    database.createNote(note)
+  }
+
+}
