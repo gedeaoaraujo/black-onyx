@@ -21,19 +21,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
+import com.example.blackonyx.NotesIntent
+import com.example.blackonyx.NotesViewModel
 import com.example.blackonyx.WhiteBlue
-import com.example.blackonyx.create.CreateNoteIntent.UpdateText
-import com.example.blackonyx.create.CreateNoteIntent.UpdateTitle
 
 @Composable
 fun CreateNoteScreen(
   modifier: Modifier = Modifier,
   onBackPressed: () -> Unit = {},
-  viewModel: CreateNoteViewModel = viewModel(),
+  viewModel: NotesViewModel,
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
   val navEventState = rememberNavigationEventState(currentInfo = NavigationEventInfo.None)
@@ -42,7 +41,7 @@ fun CreateNoteScreen(
     state = navEventState,
     isBackEnabled = true,
     onBackCompleted = {
-      viewModel.onAction(CreateNoteIntent.ToggleDialog)
+      viewModel.onAction(NotesIntent.ToggleDialog)
     }
   )
 
@@ -58,7 +57,7 @@ fun CreateNoteScreen(
       value = state.title,
       placeholder = { Text("Title") },
       onValueChange = { value ->
-        viewModel.onAction(UpdateTitle(value))
+        viewModel.onAction(NotesIntent.UpdateTitle(value))
       },
       textStyle = MaterialTheme.typography.titleLarge,
       modifier = Modifier
@@ -86,7 +85,9 @@ fun CreateNoteScreen(
     TextField(
       value = state.text,
       placeholder = { Text("Some text") },
-      onValueChange = { value -> viewModel.onAction(UpdateText(value)) },
+      onValueChange = { value ->
+        viewModel.onAction(NotesIntent.UpdateText(value))
+      },
       modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.primaryContainer),
@@ -112,7 +113,7 @@ fun CreateNoteScreen(
         },
         dismissButton = {
           TextButton(onClick = {
-            viewModel.onAction(CreateNoteIntent.ToggleDialog)
+            viewModel.onAction(NotesIntent.ToggleDialog)
           }) { Text("Não") }
         }
       )

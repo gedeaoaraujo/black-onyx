@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,6 +40,7 @@ const val APP_NAME = "Black Onyx"
 @Preview
 fun RootComponent() {
   val navController = rememberNavController()
+  val viewModel = viewModel<NotesViewModel>()
   val backStackEntry by navController.currentBackStackEntryAsState()
 
   BlackOnyxTheme {
@@ -87,12 +89,14 @@ fun RootComponent() {
       ){
         composable(HOME_SCREEN) {
           HomeScreen(
+            viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
             onClickItem = { id -> navController.navigate("$VIEW_SCREEN/$id") }
           )
         }
         composable(CREATE_SCREEN) {
           CreateNoteScreen(
+            viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
             onBackPressed = navController::navigateUp
           )
@@ -106,6 +110,7 @@ fun RootComponent() {
           val noteId = backStackEntry.savedStateHandle.get<Int>("id")?:0
           ViewNoteScreen(
             noteId = noteId,
+            viewModel = viewModel,
             modifier = Modifier.padding(innerPadding)
           )
         }

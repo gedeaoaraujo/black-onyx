@@ -16,18 +16,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.blackonyx.NotesIntent
+import com.example.blackonyx.NotesViewModel
 
 @Composable
 fun ViewNoteScreen(
   noteId: Int = 0,
   modifier: Modifier = Modifier,
-  viewModel: ViewNoteViewModel = viewModel()
+  viewModel: NotesViewModel
 ){
   val state by viewModel.state.collectAsStateWithLifecycle()
 
   LaunchedEffect(Unit){
-    viewModel.onAction(ViewNoteIntent.LoadNote(noteId))
+    viewModel.onAction(NotesIntent.LoadNote(noteId))
   }
 
   Column(
@@ -39,19 +40,19 @@ fun ViewNoteScreen(
   ){
     Text(
       maxLines = 1,
-      text = state.note.title,
+      text = state.title,
       color = MaterialTheme.colorScheme.onPrimary,
       style = MaterialTheme.typography.titleLarge,
     )
     Spacer(Modifier.size(8.dp))
     Text(
       maxLines = 1,
-      text = state.note.date,
+      text = state.date,
       color = MaterialTheme.colorScheme.onPrimary,
     )
     Spacer(Modifier.size(16.dp))
     Text(
-      text = state.note.description,
+      text = state.text,
       color = MaterialTheme.colorScheme.onPrimary,
       style = MaterialTheme.typography.bodyLarge,
     )
