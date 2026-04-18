@@ -3,12 +3,8 @@ package com.example.blackonyx
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -17,7 +13,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.blackonyx.components.CreateNoteScreen
 import com.example.blackonyx.components.HomeScreen
+import com.example.blackonyx.components.SaveButton
 import com.example.blackonyx.components.ViewNoteScreen
 
 const val HOME_SCREEN = "HOME"
@@ -57,21 +53,10 @@ fun RootComponent() {
           ),
           actions = {
             if (backStackEntry isRoute CREATE_SCREEN){
-              IconButton(
-                enabled = state.clickableCheck,
-                onClick = {
-                  viewModel.onAction(NotesIntent.SaveNote)
-                  navController.popBackStack()
-                }
-              ){
-                Icon(
-                  contentDescription = "Save Note",
-                  imageVector = Icons.Default.Check,
-                  tint = if (state.clickableCheck) {
-                    MaterialTheme.colorScheme.onPrimary
-                  } else Color.DarkGray
-                )
-              }
+              SaveButton(state, onClick = {
+                viewModel.onAction(NotesIntent.SaveNote)
+                navController.popBackStack()
+              })
             }
           }
         )
