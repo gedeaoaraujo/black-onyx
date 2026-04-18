@@ -59,7 +59,10 @@ fun RootComponent() {
             if (backStackEntry isRoute CREATE_SCREEN){
               IconButton(
                 enabled = state.clickableCheck,
-                onClick = { navController.popBackStack() }
+                onClick = {
+                  viewModel.onAction(NotesIntent.SaveNote)
+                  navController.popBackStack()
+                }
               ){
                 Icon(
                   contentDescription = "Save Note",
