@@ -18,7 +18,8 @@ data class NotesState(
   val text: String = "",
   val title: String = "",
   val showDialog: Boolean = false,
-  val date: String = dateTimeNow()
+  val date: String = dateTimeNow(),
+  val clickableCheck: Boolean = false
 )
 
 sealed class NotesIntent {
@@ -45,18 +46,30 @@ class NotesViewModel(
       HomeState()
     )
 
-  fun onAction(action: NotesIntent) = when(action) {
-    is NotesIntent.CreateNote -> createNote()
-    is NotesIntent.LoadNote -> loadNote(action.id)
-    is NotesIntent.ToggleDialog -> state.update {
-      it.copy(showDialog = state.value.showDialog.not())
+  fun onAction(action: NotesIntent) {
+    when(action) {
+      is NotesIntent.CreateNote -> createNote()
+      is NotesIntent.LoadNote -> loadNote(action.id)
+      is NotesIntent.ToggleDialog -> state.update {
+        it.copy(showDialog = state.value.showDialog.not())
+      }
+      is NotesIntent.UpdateTitle -> {
+        state.update { it.copy(title = action.title) }
+        checkClickable()
+      }
+      is NotesIntent.UpdateText -> {
+        state.update { it.copy(text = action.text) }
+        checkClickable()
+      }
     }
-    is NotesIntent.UpdateTitle -> state.update {
-      it.copy(title = action.title)
-    }
-    is NotesIntent.UpdateText -> state.update {
-      it.copy(text = action.text)
-    }
+  }
+
+  private fun checkClickable(){
+    val title = state.value.title
+    val text = state.value.text
+    state.update { it.copy(
+      clickableCheck = title.isNotBlank() && text.isNotBlank()
+    )}
   }
 
   private fun loadNote(id: Int) = viewModelScope.launch(ioDispatcher) {
@@ -69,9 +82,6 @@ class NotesViewModel(
   }
 
   private fun createNote() = viewModelScope.launch(ioDispatcher) {
-    if (state.value.title.isBlank() ||
-      state.value.text.isBlank()) return@launch
-
     repository.createNote(Note(
       title = state.value.title,
       date = state.value.date,

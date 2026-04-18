@@ -17,8 +17,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -42,6 +44,7 @@ fun RootComponent() {
   val navController = rememberNavController()
   val viewModel = viewModel<NotesViewModel>()
   val backStackEntry by navController.currentBackStackEntryAsState()
+  val state by viewModel.state.collectAsStateWithLifecycle()
 
   BlackOnyxTheme {
     Scaffold(
@@ -53,16 +56,19 @@ fun RootComponent() {
             containerColor = MaterialTheme.colorScheme.primary,
           ),
           actions = {
-            if (backStackEntry isRoute CREATE_SCREEN) IconButton(
-              onClick = {
-                navController.popBackStack()
+            if (backStackEntry isRoute CREATE_SCREEN){
+              IconButton(
+                enabled = state.clickableCheck,
+                onClick = { navController.popBackStack() }
+              ){
+                Icon(
+                  contentDescription = "Save Note",
+                  imageVector = Icons.Default.Check,
+                  tint = if (state.clickableCheck) {
+                    MaterialTheme.colorScheme.onPrimary
+                  } else Color.DarkGray
+                )
               }
-            ){
-              Icon(
-                contentDescription = "Save Note",
-                imageVector = Icons.Default.Check,
-                tint = MaterialTheme.colorScheme.onPrimary
-              )
             }
           }
         )
