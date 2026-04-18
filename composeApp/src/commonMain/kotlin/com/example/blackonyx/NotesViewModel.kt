@@ -23,6 +23,7 @@ data class NotesState(
 )
 
 sealed class NotesIntent {
+  object SaveNote: NotesIntent()
   object CreateNote: NotesIntent()
   object ToggleDialog: NotesIntent()
   data class LoadNote(val id: Int): NotesIntent()
@@ -48,7 +49,7 @@ class NotesViewModel(
 
   fun onAction(action: NotesIntent) {
     when(action) {
-      is NotesIntent.CreateNote -> createNote()
+      is NotesIntent.SaveNote -> saveNote()
       is NotesIntent.LoadNote -> loadNote(action.id)
       is NotesIntent.ToggleDialog -> state.update {
         it.copy(showDialog = state.value.showDialog.not())
@@ -61,7 +62,12 @@ class NotesViewModel(
         state.update { it.copy(text = action.text) }
         checkClickable()
       }
+      is NotesIntent.CreateNote -> createNewNote()
     }
+  }
+
+  private fun createNewNote() {
+    state.update { NotesState() }
   }
 
   private fun checkClickable(){
@@ -81,13 +87,12 @@ class NotesViewModel(
     )}
   }
 
-  private fun createNote() = viewModelScope.launch(ioDispatcher) {
+  private fun saveNote() = viewModelScope.launch(ioDispatcher) {
     repository.createNote(Note(
       title = state.value.title,
       date = state.value.date,
       description = state.value.text
     ))
-    state.update { NotesState() }
   }
 
 
