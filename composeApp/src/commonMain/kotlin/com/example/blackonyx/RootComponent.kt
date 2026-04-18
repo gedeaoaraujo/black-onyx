@@ -26,9 +26,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.blackonyx.create.CreateNoteScreen
-import com.example.blackonyx.home.HomeScreen
-import com.example.blackonyx.view.ViewNoteScreen
+import com.example.blackonyx.components.CreateNoteScreen
+import com.example.blackonyx.components.HomeScreen
+import com.example.blackonyx.components.ViewNoteScreen
 
 const val HOME_SCREEN = "HOME"
 const val VIEW_SCREEN = "VIEW"

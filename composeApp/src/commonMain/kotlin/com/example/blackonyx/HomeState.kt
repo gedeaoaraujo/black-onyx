@@ -1,4 +1,4 @@
-package com.example.blackonyx.home
+package com.example.blackonyx
 
 import com.example.blackonyx.domain.Note
 

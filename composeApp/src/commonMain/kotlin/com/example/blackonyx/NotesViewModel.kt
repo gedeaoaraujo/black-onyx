@@ -3,7 +3,6 @@ package com.example.blackonyx
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.blackonyx.domain.Note
-import com.example.blackonyx.home.HomeState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
