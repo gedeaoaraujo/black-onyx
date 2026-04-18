@@ -2,11 +2,8 @@ package com.example.blackonyx
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.blackonyx.create.CreateNoteRepository
 import com.example.blackonyx.domain.Note
-import com.example.blackonyx.home.HomeRepository
 import com.example.blackonyx.home.HomeState
-import com.example.blackonyx.view.ViewNoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -34,14 +31,12 @@ sealed class NotesIntent {
 }
 
 class NotesViewModel(
-  val createNoteRepository: CreateNoteRepository = CreateNoteRepository(),
-  val viewNoteRepository: ViewNoteRepository = ViewNoteRepository(),
+  val repository: NotesRepository = NotesRepository(),
   val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-  homeRepository: HomeRepository = HomeRepository(),
 ): ViewModel() {
 
   val state = MutableStateFlow(NotesState())
-  val notes: StateFlow<HomeState> = homeRepository.getAllNotes()
+  val notes: StateFlow<HomeState> = repository.getAllNotes()
     .map { notes ->
       HomeState(notes)
     }
@@ -66,7 +61,7 @@ class NotesViewModel(
   }
 
   private fun loadNote(id: Int) = viewModelScope.launch(ioDispatcher) {
-    val note = viewNoteRepository.loadNote(id)
+    val note = repository.loadNote(id)
     state.update { it.copy(
       text = note.description,
       title = note.title,
@@ -78,7 +73,7 @@ class NotesViewModel(
     if (state.value.title.isBlank() ||
       state.value.text.isBlank()) return@launch
 
-    createNoteRepository.createNote(Note(
+    repository.createNote(Note(
       title = state.value.title,
       date = state.value.date,
       description = state.value.text
