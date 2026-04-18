@@ -30,8 +30,8 @@ sealed class NotesIntent {
 }
 
 class NotesViewModel(
-  val repository: NotesRepository = NotesRepository(),
-  val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+  private val repository: NotesRepository = NotesRepository(),
+  private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ): ViewModel() {
 
   val state = MutableStateFlow(NotesState())
