@@ -26,18 +26,18 @@ fun ListItem(
     Text(
       maxLines = 1,
       text = item.title,
-      color = MaterialTheme.colorScheme.onPrimary,
+      color = MaterialTheme.colorScheme.onSecondary,
       style = MaterialTheme.typography.titleMedium,
     )
     Text(
       maxLines = 1,
       text = item.date,
-      color = MaterialTheme.colorScheme.onPrimary,
+      color = MaterialTheme.colorScheme.onSecondary,
     )
     Text(
       maxLines = 3,
       text = item.description,
-      color = MaterialTheme.colorScheme.onPrimary,
+      color = MaterialTheme.colorScheme.onSecondary,
       style = MaterialTheme.typography.bodyLarge,
     )
   }
