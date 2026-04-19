@@ -55,7 +55,7 @@ fun RootComponent() {
           ),
           actions = {
             if (backStackEntry isRoute HOME_SCREEN){
-              ThemeButton {
+              ThemeButton(state.isDarkTheme) {
                 viewModel.onAction(NotesIntent.ToggleTheme)
               }
             }
