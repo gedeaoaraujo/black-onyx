@@ -9,10 +9,17 @@ val Dark = Color(0xFF000000)
 val DarkBlue = Color(0xFF000028)
 val WhiteBlue = Color(0xFF00003C)
 
-val LightScheme = lightColorScheme(
+val DarkScheme = lightColorScheme(
   primary = DarkBlue,
   secondary = WhiteBlue,
   primaryContainer = Dark,
+)
+
+val LightScheme = lightColorScheme(
+  primary = DarkBlue,
+  onSecondary = Dark,
+  secondary = WhiteBlue,
+  primaryContainer = Color.White,
 )
 
 @Composable
@@ -21,7 +28,7 @@ fun BlackOnyxTheme(
   content: (@Composable () -> Unit)
 ){
   val colorScheme = if (isDarkTheme){
-    LightScheme
+    DarkScheme
   } else {
     LightScheme
   }
