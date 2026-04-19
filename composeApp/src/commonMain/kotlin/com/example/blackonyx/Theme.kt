@@ -24,7 +24,7 @@ val LightScheme = lightColorScheme(
 
 @Composable
 fun BlackOnyxTheme(
-  isDarkTheme: Boolean = false,
+  isDarkTheme: Boolean = true,
   content: (@Composable () -> Unit)
 ){
   val colorScheme = if (isDarkTheme){
