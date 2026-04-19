@@ -12,6 +12,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,10 +46,12 @@ fun RootComponent() {
   val backStackEntry by navController.currentBackStackEntryAsState()
   val state by viewModel.state.collectAsStateWithLifecycle()
 
+  val showTopBar by remember { mutableStateOf(false) }
+
   BlackOnyxTheme(state.isDarkTheme) {
     Scaffold(
       topBar = {
-        TopAppBar(
+        if (showTopBar) TopAppBar(
           title = { Text(APP_NAME) },
           colors = TopAppBarDefaults.topAppBarColors().copy(
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
