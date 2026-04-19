@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class NotesState(
+  val id: Int = 0,
   val text: String = "",
   val title: String = "",
   val showDialog: Boolean = false,
@@ -24,6 +25,7 @@ data class NotesState(
 
 sealed class NotesIntent {
   object SaveNote: NotesIntent()
+  object DeleteNote: NotesIntent()
   object CreateNote: NotesIntent()
   object ToggleDialog: NotesIntent()
   data class LoadNote(val id: Int): NotesIntent()
@@ -63,7 +65,12 @@ class NotesViewModel(
         checkClickable()
       }
       is NotesIntent.CreateNote -> createNewNote()
+      is NotesIntent.DeleteNote -> deleteNote()
     }
+  }
+
+  private fun deleteNote() = viewModelScope.launch(ioDispatcher) {
+    repository.deleteNote(state.value.id)
   }
 
   private fun createNewNote() {
@@ -81,6 +88,7 @@ class NotesViewModel(
   private fun loadNote(id: Int) = viewModelScope.launch(ioDispatcher) {
     val note = repository.loadNote(id)
     state.update { it.copy(
+      id = id,
       text = note.description,
       title = note.title,
       date = note.date,
