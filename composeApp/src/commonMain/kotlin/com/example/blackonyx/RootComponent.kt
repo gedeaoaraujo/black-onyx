@@ -28,14 +28,16 @@ import androidx.navigation.navArgument
 import com.example.blackonyx.components.CreateNoteScreen
 import com.example.blackonyx.components.DeleteButton
 import com.example.blackonyx.components.HomeScreen
+import com.example.blackonyx.components.PasswordScreen
 import com.example.blackonyx.components.SaveButton
 import com.example.blackonyx.components.ThemeButton
 import com.example.blackonyx.components.ViewNoteScreen
 
+const val APP_NAME = "Black Onyx"
 const val HOME_SCREEN = "HOME"
 const val VIEW_SCREEN = "VIEW"
 const val CREATE_SCREEN = "CREATE"
-const val APP_NAME = "Black Onyx"
+const val PASSWORD_SCREEN = "PASSWORD"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,8 +100,15 @@ fun RootComponent() {
     ) { innerPadding ->
       NavHost(
         navController = navController,
-        startDestination = HOME_SCREEN
+        startDestination = PASSWORD_SCREEN
       ){
+        composable(PASSWORD_SCREEN) {
+          PasswordScreen(
+            viewModel = viewModel,
+            modifier = Modifier.padding(innerPadding),
+            onBackPressed = navController::navigateUp
+          )
+        }
         composable(HOME_SCREEN) {
           HomeScreen(
             viewModel = viewModel,
