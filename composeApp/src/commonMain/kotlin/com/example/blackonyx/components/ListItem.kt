@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.blackonyx.domain.Note
 
@@ -26,8 +27,9 @@ fun ListItem(
     Text(
       maxLines = 1,
       text = item.title,
+      fontWeight = FontWeight.Bold,
       color = MaterialTheme.colorScheme.onSecondary,
-      style = MaterialTheme.typography.titleMedium,
+      style = MaterialTheme.typography.titleMedium
     )
     Text(
       maxLines = 1,

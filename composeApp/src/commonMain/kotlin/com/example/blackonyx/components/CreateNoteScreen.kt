@@ -69,9 +69,9 @@ fun CreateNoteScreen(
         .fillMaxWidth()
         .background(MaterialTheme.colorScheme.primaryContainer),
       colors = TextFieldDefaults.colors(
-        cursorColor = MaterialTheme.colorScheme.onPrimary,
-        focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-        unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+        cursorColor = MaterialTheme.colorScheme.onSecondary,
+        focusedTextColor = MaterialTheme.colorScheme.onSecondary,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
         selectionColors = TextSelectionColors(WhiteBlue, WhiteBlue),
         focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
         unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -83,7 +83,7 @@ fun CreateNoteScreen(
     Text(
       maxLines = 1,
       text = state.date,
-      color = MaterialTheme.colorScheme.onPrimary,
+      color = MaterialTheme.colorScheme.onSecondary,
       modifier = Modifier.padding(horizontal = 16.dp)
     )
     Spacer(Modifier.size(16.dp))
@@ -97,9 +97,9 @@ fun CreateNoteScreen(
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.primaryContainer),
       colors = TextFieldDefaults.colors(
-        cursorColor = MaterialTheme.colorScheme.onPrimary,
-        focusedTextColor = MaterialTheme.colorScheme.onPrimary,
-        unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+        cursorColor = MaterialTheme.colorScheme.onSecondary,
+        focusedTextColor = MaterialTheme.colorScheme.onSecondary,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
         selectionColors = TextSelectionColors(WhiteBlue, WhiteBlue),
         focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
         unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,

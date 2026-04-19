@@ -41,19 +41,19 @@ fun ViewNoteScreen(
     Text(
       maxLines = 1,
       text = state.title,
-      color = MaterialTheme.colorScheme.onPrimary,
+      color = MaterialTheme.colorScheme.onSecondary,
       style = MaterialTheme.typography.titleLarge,
     )
     Spacer(Modifier.size(8.dp))
     Text(
       maxLines = 1,
       text = state.date,
-      color = MaterialTheme.colorScheme.onPrimary,
+      color = MaterialTheme.colorScheme.onSecondary,
     )
     Spacer(Modifier.size(16.dp))
     Text(
       text = state.text,
-      color = MaterialTheme.colorScheme.onPrimary,
+      color = MaterialTheme.colorScheme.onSecondary,
       style = MaterialTheme.typography.bodyLarge,
     )
   }
