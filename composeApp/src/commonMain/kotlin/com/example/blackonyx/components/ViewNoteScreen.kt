@@ -28,7 +28,7 @@ fun ViewNoteScreen(
   val state by viewModel.state.collectAsStateWithLifecycle()
 
   LaunchedEffect(Unit){
-    viewModel.onAction(NotesIntent.LoadNote(noteId))
+    viewModel.onAction(NotesIntent.ViewNote(noteId))
   }
 
   Column(

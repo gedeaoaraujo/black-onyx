@@ -28,7 +28,7 @@ sealed class NotesIntent {
   object DeleteNote: NotesIntent()
   object CreateNote: NotesIntent()
   object ToggleDialog: NotesIntent()
-  data class LoadNote(val id: Int): NotesIntent()
+  data class ViewNote(val id: Int): NotesIntent()
   data class UpdateText(val text: String): NotesIntent()
   data class UpdateTitle(val title: String): NotesIntent()
 }
@@ -52,7 +52,7 @@ class NotesViewModel(
   fun onAction(action: NotesIntent) {
     when(action) {
       is NotesIntent.SaveNote -> saveNote()
-      is NotesIntent.LoadNote -> loadNote(action.id)
+      is NotesIntent.ViewNote -> viewNote(action.id)
       is NotesIntent.ToggleDialog -> state.update {
         it.copy(showDialog = state.value.showDialog.not())
       }
@@ -85,8 +85,8 @@ class NotesViewModel(
     )}
   }
 
-  private fun loadNote(id: Int) = viewModelScope.launch(ioDispatcher) {
-    val note = repository.loadNote(id)
+  private fun viewNote(id: Int) = viewModelScope.launch(ioDispatcher) {
+    val note = repository.viewNote(id)
     state.update { it.copy(
       id = id,
       text = note.description,

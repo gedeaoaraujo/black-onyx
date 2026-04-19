@@ -13,7 +13,7 @@ class NotesRepository(
     return database.getAllNotes()
   }
 
-  suspend fun loadNote(id: Int): Note {
+  suspend fun viewNote(id: Int): Note {
     return database.getNote(id)
   }
 
