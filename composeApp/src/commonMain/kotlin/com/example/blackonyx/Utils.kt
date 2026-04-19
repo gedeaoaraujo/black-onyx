@@ -7,7 +7,7 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 
 infix fun NavBackStackEntry?.isRoute(screen: String): Boolean {
-    return this?.destination?.route == screen
+    return this?.destination?.route?.contains(screen) == true
 }
 
 fun dateTimeNow(): String {

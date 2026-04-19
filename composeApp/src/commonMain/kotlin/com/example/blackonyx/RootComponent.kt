@@ -73,7 +73,7 @@ fun RootComponent() {
               })
             }
 
-            if (backStackEntry isRoute "$VIEW_SCREEN/{id}"){
+            if (backStackEntry isRoute VIEW_SCREEN){
               DeleteButton {
                 viewModel.onAction(NotesIntent.DeleteNote)
                 navController.popBackStack()
