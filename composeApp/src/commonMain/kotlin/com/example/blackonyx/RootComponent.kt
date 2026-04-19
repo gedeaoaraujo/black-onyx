@@ -27,6 +27,7 @@ import com.example.blackonyx.components.CreateNoteScreen
 import com.example.blackonyx.components.DeleteButton
 import com.example.blackonyx.components.HomeScreen
 import com.example.blackonyx.components.SaveButton
+import com.example.blackonyx.components.ThemeButton
 import com.example.blackonyx.components.ViewNoteScreen
 
 const val HOME_SCREEN = "HOME"
@@ -43,7 +44,7 @@ fun RootComponent() {
   val backStackEntry by navController.currentBackStackEntryAsState()
   val state by viewModel.state.collectAsStateWithLifecycle()
 
-  BlackOnyxTheme {
+  BlackOnyxTheme(state.isDarkTheme) {
     Scaffold(
       topBar = {
         TopAppBar(
@@ -53,6 +54,12 @@ fun RootComponent() {
             containerColor = MaterialTheme.colorScheme.primary,
           ),
           actions = {
+            if (backStackEntry isRoute HOME_SCREEN){
+              ThemeButton {
+                viewModel.onAction(NotesIntent.ToggleTheme)
+              }
+            }
+
             if (backStackEntry isRoute CREATE_SCREEN){
               SaveButton(state, onClick = {
                 viewModel.onAction(NotesIntent.SaveNote)

@@ -20,13 +20,15 @@ data class NotesState(
   val title: String = "",
   val showDialog: Boolean = false,
   val date: String = dateTimeNow(),
-  val clickableCheck: Boolean = false
+  val isDarkTheme: Boolean = false,
+  val clickableCheck: Boolean = false,
 )
 
 sealed class NotesIntent {
   object SaveNote: NotesIntent()
   object DeleteNote: NotesIntent()
   object CreateNote: NotesIntent()
+  object ToggleTheme: NotesIntent()
   object ToggleDialog: NotesIntent()
   data class ViewNote(val id: Int): NotesIntent()
   data class UpdateText(val text: String): NotesIntent()
@@ -66,6 +68,13 @@ class NotesViewModel(
       }
       is NotesIntent.CreateNote -> createNewNote()
       is NotesIntent.DeleteNote -> deleteNote()
+      is NotesIntent.ToggleTheme -> toggleTheme()
+    }
+  }
+
+  private fun toggleTheme() {
+    state.update {
+      it.copy(isDarkTheme = it.isDarkTheme.not())
     }
   }
 
