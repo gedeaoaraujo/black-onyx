@@ -38,7 +38,7 @@ import com.example.blackonyx.WhiteBlue
 fun PasswordScreen(
   modifier: Modifier,
   viewModel: NotesViewModel,
-  onBackPressed: () -> Boolean
+  onCheckPressed: () -> Unit
 ) {
   var password by remember { mutableStateOf("") }
 
@@ -192,7 +192,7 @@ fun PasswordScreen(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = {}
+          onClick = { onCheckPressed() }
         ) { Icon(
           Icons.Default.Check,
           contentDescription = null,

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,7 +49,7 @@ fun RootComponent() {
   val backStackEntry by navController.currentBackStackEntryAsState()
   val state by viewModel.state.collectAsStateWithLifecycle()
 
-  val showTopBar by remember { mutableStateOf(false) }
+  var showTopBar by remember { mutableStateOf(false) }
 
   BlackOnyxTheme(state.isDarkTheme) {
     Scaffold(
@@ -106,7 +107,10 @@ fun RootComponent() {
           PasswordScreen(
             viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
-            onBackPressed = navController::navigateUp
+            onCheckPressed = {
+              navController.navigate(HOME_SCREEN)
+              showTopBar = true
+            }
           )
         }
         composable(HOME_SCREEN) {
