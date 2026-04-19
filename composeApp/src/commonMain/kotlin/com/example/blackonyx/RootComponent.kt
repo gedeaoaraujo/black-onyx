@@ -24,6 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.blackonyx.components.CreateNoteScreen
+import com.example.blackonyx.components.DeleteButton
 import com.example.blackonyx.components.HomeScreen
 import com.example.blackonyx.components.SaveButton
 import com.example.blackonyx.components.ViewNoteScreen
@@ -57,6 +58,13 @@ fun RootComponent() {
                 viewModel.onAction(NotesIntent.SaveNote)
                 navController.popBackStack()
               })
+            }
+
+            if (backStackEntry isRoute "$VIEW_SCREEN/{id}"){
+              DeleteButton {
+                viewModel.onAction(NotesIntent.DeleteNote)
+                navController.popBackStack()
+              }
             }
           }
         )
