@@ -21,4 +21,8 @@ class NotesRepository(
     database.createNote(note)
   }
 
+  suspend fun deleteNote(id: Int) {
+    database.deleteNoteById(id)
+  }
+
 }

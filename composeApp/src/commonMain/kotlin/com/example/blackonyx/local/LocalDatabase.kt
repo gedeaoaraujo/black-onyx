@@ -7,4 +7,5 @@ interface LocalDatabase {
   fun getAllNotes(): Flow<List<Note>>
   suspend fun getNote(id: Int): Note
   suspend fun createNote(note: Note)
+  suspend fun deleteNoteById(id: Int)
 }

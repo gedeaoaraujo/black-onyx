@@ -30,4 +30,9 @@ object InMemoryDatabase: LocalDatabase {
     _notes.update { it + note.copy(id = count) }
   }
 
+  override suspend fun deleteNoteById(id: Int) {
+    val note = _notes.value.first { it.id == id }
+    _notes.update { it - note }
+  }
+
 }
