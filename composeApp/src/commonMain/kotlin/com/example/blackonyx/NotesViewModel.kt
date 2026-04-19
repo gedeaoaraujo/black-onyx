@@ -20,7 +20,7 @@ data class NotesState(
   val title: String = "",
   val showDialog: Boolean = false,
   val date: String = dateTimeNow(),
-  val isDarkTheme: Boolean = false,
+  val isDarkTheme: Boolean = true,
   val clickableCheck: Boolean = false,
 )
 
