@@ -41,7 +41,7 @@ import kotlinx.serialization.Serializable
 const val APP_NAME = "Black Onyx"
 
 @Serializable
-open class Screen {
+sealed class Screen {
   @Serializable object Home : Screen()
   @Serializable object Create : Screen()
   @Serializable object Password : Screen()
