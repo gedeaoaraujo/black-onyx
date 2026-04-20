@@ -20,12 +20,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
+import com.example.blackonyx.Screen.Create
+import com.example.blackonyx.Screen.Home
+import com.example.blackonyx.Screen.Password
+import com.example.blackonyx.Screen.View
 import com.example.blackonyx.components.CreateNoteScreen
 import com.example.blackonyx.components.DeleteButton
 import com.example.blackonyx.components.HomeScreen
@@ -33,16 +36,21 @@ import com.example.blackonyx.components.PasswordScreen
 import com.example.blackonyx.components.SaveButton
 import com.example.blackonyx.components.ThemeButton
 import com.example.blackonyx.components.ViewNoteScreen
+import kotlinx.serialization.Serializable
 
 const val APP_NAME = "Black Onyx"
-const val HOME_SCREEN = "HOME"
-const val VIEW_SCREEN = "VIEW"
-const val CREATE_SCREEN = "CREATE"
-const val PASSWORD_SCREEN = "PASSWORD"
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
+@Serializable
+open class Screen {
+  @Serializable object Home : Screen()
+  @Serializable object Create : Screen()
+  @Serializable object Password : Screen()
+  @Serializable data class View(val id: Int) : Screen()
+}
+
 @Preview
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun RootComponent() {
   val navController = rememberNavController()
   val viewModel = viewModel<NotesViewModel>()
@@ -61,20 +69,20 @@ fun RootComponent() {
             containerColor = MaterialTheme.colorScheme.primary,
           ),
           actions = {
-            if (backStackEntry isRoute HOME_SCREEN){
+            if (backStackEntry isRoute Home::class){
               ThemeButton(state.isDarkTheme) {
                 viewModel.onAction(NotesIntent.ToggleTheme)
               }
             }
 
-            if (backStackEntry isRoute CREATE_SCREEN){
+            if (backStackEntry isRoute Create::class){
               SaveButton(state, onClick = {
                 viewModel.onAction(NotesIntent.SaveNote)
                 navController.popBackStack()
               })
             }
 
-            if (backStackEntry isRoute VIEW_SCREEN){
+            if (backStackEntry isRoute View::class){
               DeleteButton {
                 viewModel.onAction(NotesIntent.DeleteNote)
                 navController.popBackStack()
@@ -84,13 +92,13 @@ fun RootComponent() {
         )
       },
       floatingActionButton = {
-        if (backStackEntry isRoute HOME_SCREEN){
+        if (backStackEntry isRoute Home::class){
           FloatingActionButton(
             containerColor = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.size(60.dp),
             shape = CircleShape,
             onClick = {
-              navController.navigate(CREATE_SCREEN)
+              navController.navigate(route = Create)
             }
           ){
             Text("+", color = MaterialTheme.colorScheme.onPrimary)
@@ -101,41 +109,38 @@ fun RootComponent() {
     ) { innerPadding ->
       NavHost(
         navController = navController,
-        startDestination = PASSWORD_SCREEN
+        startDestination = Password
       ){
-        composable(PASSWORD_SCREEN) {
+        composable<Password> {
           PasswordScreen(
             viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
             onCheckPressed = {
-              navController.navigate(HOME_SCREEN)
+              navController.navigate(route = Home)
               showTopBar = true
             }
           )
         }
-        composable(HOME_SCREEN) {
+        composable<Home> {
           HomeScreen(
             viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
-            onClickItem = { id -> navController.navigate("$VIEW_SCREEN/$id") }
+            onClickItem = { id ->
+              navController.navigate(route = View(id))
+            }
           )
         }
-        composable(CREATE_SCREEN) {
+        composable<Create> {
           CreateNoteScreen(
             viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
             onBackPressed = navController::navigateUp
           )
         }
-        composable(
-          route = "$VIEW_SCREEN/{id}",
-          arguments = listOf(navArgument("id") {
-            type = NavType.IntType
-          })
-        ) { backStackEntry ->
-          val noteId = backStackEntry.savedStateHandle.get<Int>("id")?:0
+        composable<View> { backStackEntry ->
+          val view = backStackEntry.toRoute<View>()
           ViewNoteScreen(
-            noteId = noteId,
+            noteId = view.id,
             viewModel = viewModel,
             modifier = Modifier.padding(innerPadding)
           )
