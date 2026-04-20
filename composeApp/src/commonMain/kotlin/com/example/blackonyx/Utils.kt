@@ -4,10 +4,13 @@ import androidx.navigation.NavBackStackEntry
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
+import kotlin.reflect.KClass
 import kotlin.time.Clock
 
-infix fun NavBackStackEntry?.isRoute(screen: String): Boolean {
-    return this?.destination?.route?.contains(screen) == true
+
+infix fun <T: Screen>NavBackStackEntry?.isRoute(screen: KClass<T>): Boolean {
+    return this?.destination?.route
+        ?.contains(screen.qualifiedName.orEmpty()) == true
 }
 
 fun dateTimeNow(): String {
