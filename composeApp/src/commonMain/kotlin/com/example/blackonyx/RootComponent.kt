@@ -113,6 +113,7 @@ fun RootComponent() {
       ){
         composable<Password> {
           PasswordScreen(
+            state = state,
             viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
             onCheckPressed = {

@@ -23,25 +23,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.blackonyx.NotesIntent
+import com.example.blackonyx.NotesState
 import com.example.blackonyx.NotesViewModel
 import com.example.blackonyx.WhiteBlue
 
 @Composable
 fun PasswordScreen(
+  state: NotesState,
   modifier: Modifier,
   viewModel: NotesViewModel,
   onCheckPressed: () -> Unit
 ) {
-  var password by remember { mutableStateOf("") }
-
   Box(Modifier
     .fillMaxSize()
     .background(MaterialTheme.colorScheme.primary)
@@ -62,8 +59,10 @@ fun PasswordScreen(
       Text("Digite a sua senha", color = MaterialTheme.colorScheme.onPrimary)
       Spacer(Modifier.size(8.dp))
       TextField(
-        value = password,
-        onValueChange = { password = it },
+        value = state.password,
+        onValueChange = {
+          viewModel.onAction(NotesIntent.UpdatePassword(it))
+        },
         modifier = Modifier
           .size(width = 200.dp, height = 50.dp)
           .background(MaterialTheme.colorScheme.primary)
@@ -85,96 +84,110 @@ fun PasswordScreen(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "1" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "1")) }
         ) { Text("1", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "2" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "2")) }
         ) { Text("2", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "3" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "3")) }
         ) { Text("3", color = MaterialTheme.colorScheme.onPrimary) }
       }
+
       Spacer(Modifier.size(16.dp))
       Row {
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "4" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "4")) }
         ) { Text("4", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "5" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "5")) }
         ) { Text("5", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "6" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "6")) }
         ) { Text("6", color = MaterialTheme.colorScheme.onPrimary) }
       }
+
       Spacer(Modifier.size(16.dp))
       Row {
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "7" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "7")) }
         ) { Text("7", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "8" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "8")) }
         ) { Text("8", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "9" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "9")) }
         ) { Text("9", color = MaterialTheme.colorScheme.onPrimary) }
       }
+
       Spacer(Modifier.size(16.dp))
       Row {
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "#" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "#")) }
         ) { Text("#", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password += "0" }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(state.password + "0")) }
         ) { Text("0", color = MaterialTheme.colorScheme.onPrimary) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,
           modifier = Modifier.size(60.dp),
           shape = CircleShape,
-          onClick = { password = password.dropLast(1) }
+          onClick = { viewModel.onAction(NotesIntent.UpdatePassword(
+            state.password.dropLast(1)
+          )) }
         ) { Icon(
           Icons.AutoMirrored.Default.Backspace,
           contentDescription = null,
           tint = MaterialTheme.colorScheme.onPrimary
         ) }
       }
+
       Spacer(Modifier.size(16.dp))
       Row {
         FloatingActionButton(
@@ -187,6 +200,7 @@ fun PasswordScreen(
           contentDescription = null,
           tint = MaterialTheme.colorScheme.onPrimary
         ) }
+
         Spacer(Modifier.size(16.dp))
         FloatingActionButton(
           containerColor = MaterialTheme.colorScheme.secondary,

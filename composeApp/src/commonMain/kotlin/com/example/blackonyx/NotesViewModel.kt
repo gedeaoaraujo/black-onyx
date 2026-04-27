@@ -18,6 +18,7 @@ data class NotesState(
   val id: Int = 0,
   val text: String = "",
   val title: String = "",
+  val password: String = "",
   val showDialog: Boolean = false,
   val date: String = dateTimeNow(),
   val isDarkTheme: Boolean = true,
@@ -33,6 +34,7 @@ sealed class NotesIntent {
   data class ViewNote(val id: Int): NotesIntent()
   data class UpdateText(val text: String): NotesIntent()
   data class UpdateTitle(val title: String): NotesIntent()
+  data class UpdatePassword(val password: String): NotesIntent()
 }
 
 class NotesViewModel(
@@ -65,6 +67,9 @@ class NotesViewModel(
       is NotesIntent.UpdateText -> {
         state.update { it.copy(text = action.text) }
         checkClickable()
+      }
+      is NotesIntent.UpdatePassword -> {
+        state.update { it.copy(password = action.password) }
       }
       is NotesIntent.CreateNote -> createNewNote()
       is NotesIntent.DeleteNote -> deleteNote()
