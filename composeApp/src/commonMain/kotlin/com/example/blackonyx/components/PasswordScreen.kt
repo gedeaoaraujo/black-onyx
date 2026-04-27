@@ -25,6 +25,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.blackonyx.NotesIntent
@@ -63,6 +64,7 @@ fun PasswordScreen(
         onValueChange = {
           viewModel.onAction(NotesIntent.UpdatePassword(it))
         },
+        visualTransformation = PasswordVisualTransformation(),
         modifier = Modifier
           .size(width = 200.dp, height = 50.dp)
           .background(MaterialTheme.colorScheme.primary)
