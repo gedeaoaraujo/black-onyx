@@ -83,7 +83,9 @@ class NotesViewModel(
   }
 
   private fun checkPassword() = viewModelScope.launch(ioDispatcher) {
-    val correct = state.value.password == "777"
+    val correct = repository.checkPassword(
+      state.value.password
+    )
     state.update { it.copy(
       showTopBar = correct,
       navigateHome = correct,

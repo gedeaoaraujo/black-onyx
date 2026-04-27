@@ -8,4 +8,5 @@ interface LocalDatabase {
   suspend fun getNote(id: Int): Note
   suspend fun createNote(note: Note)
   suspend fun deleteNoteById(id: Int)
+  suspend fun checkPassword(password: String): Boolean
 }

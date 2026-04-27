@@ -25,4 +25,8 @@ class NotesRepository(
     database.deleteNoteById(id)
   }
 
+  suspend fun checkPassword(password: String): Boolean {
+    return database.checkPassword(password)
+  }
+
 }

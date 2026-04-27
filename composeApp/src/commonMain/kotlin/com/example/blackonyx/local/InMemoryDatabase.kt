@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.MutableStateFlow
 
 object InMemoryDatabase: LocalDatabase {
+
+  private val _password = "888"
   private val _notes = MutableStateFlow<List<Note>>(emptyList())
 
   init {
@@ -33,6 +35,10 @@ object InMemoryDatabase: LocalDatabase {
   override suspend fun deleteNoteById(id: Int) {
     val note = _notes.value.first { it.id == id }
     _notes.update { it - note }
+  }
+
+  override suspend fun checkPassword(password: String): Boolean {
+    return _password == password
   }
 
 }
