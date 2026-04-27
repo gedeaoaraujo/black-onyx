@@ -14,32 +14,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class NotesState(
-  val id: Int = 0,
-  val text: String = "",
-  val title: String = "",
-  val password: String = "",
-  val showDialog: Boolean = false,
-  val showTopBar: Boolean = false,
-  val date: String = dateTimeNow(),
-  val isDarkTheme: Boolean = true,
-  val navigateHome: Boolean = false,
-  val clickableCheck: Boolean = false,
-  val showPasswordError: Boolean = false,
-)
-
-sealed class NotesIntent {
-  object SaveNote: NotesIntent()
-  object DeleteNote: NotesIntent()
-  object CreateNote: NotesIntent()
-  object ToggleTheme: NotesIntent()
-  object ToggleDialog: NotesIntent()
-  object CheckPassword: NotesIntent()
-  data class ViewNote(val id: Int): NotesIntent()
-  data class UpdateText(val text: String): NotesIntent()
-  data class UpdateTitle(val title: String): NotesIntent()
-  data class UpdatePassword(val password: String): NotesIntent()
-}
 
 class NotesViewModel(
   private val repository: NotesRepository = NotesRepository(),
