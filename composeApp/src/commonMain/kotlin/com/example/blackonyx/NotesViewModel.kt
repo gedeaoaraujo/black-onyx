@@ -20,6 +20,7 @@ data class NotesState(
   val title: String = "",
   val password: String = "",
   val showDialog: Boolean = false,
+  val showTopBar: Boolean = false,
   val date: String = dateTimeNow(),
   val isDarkTheme: Boolean = true,
   val navigateHome: Boolean = false,
@@ -83,7 +84,11 @@ class NotesViewModel(
 
   private fun checkPassword() = viewModelScope.launch(ioDispatcher) {
     val correct = state.value.password == "777"
-    state.update { it.copy(navigateHome = correct, showPasswordError = correct.not()) }
+    state.update { it.copy(
+      showTopBar = correct,
+      navigateHome = correct,
+      showPasswordError = correct.not()
+    )}
   }
 
   private fun toggleTheme() {
