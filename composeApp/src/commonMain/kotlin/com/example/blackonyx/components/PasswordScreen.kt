@@ -78,6 +78,10 @@ fun PasswordScreen(
           unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
         )
       )
+      if (state.showPasswordError) {
+        Spacer(Modifier.size(16.dp))
+        Text("A senha está incorreta", color = MaterialTheme.colorScheme.error)
+      }
       Spacer(Modifier.size(16.dp))
       Row {
         FloatingActionButton(

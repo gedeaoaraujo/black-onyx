@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +59,13 @@ fun RootComponent() {
   val state by viewModel.state.collectAsStateWithLifecycle()
 
   var showTopBar by remember { mutableStateOf(false) }
+
+  LaunchedEffect(state.navigateHome){
+    if (state.navigateHome){
+      showTopBar = true
+      navController.navigate(route = Home)
+    }
+  }
 
   BlackOnyxTheme(state.isDarkTheme) {
     Scaffold(
@@ -117,8 +125,7 @@ fun RootComponent() {
             viewModel = viewModel,
             modifier = Modifier.padding(innerPadding),
             onCheckPressed = {
-              navController.navigate(route = Home)
-              showTopBar = true
+              viewModel.onAction(NotesIntent.CheckPassword)
             }
           )
         }

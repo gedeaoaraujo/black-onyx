@@ -22,7 +22,9 @@ data class NotesState(
   val showDialog: Boolean = false,
   val date: String = dateTimeNow(),
   val isDarkTheme: Boolean = true,
+  val navigateHome: Boolean = false,
   val clickableCheck: Boolean = false,
+  val showPasswordError: Boolean = false,
 )
 
 sealed class NotesIntent {
@@ -31,6 +33,7 @@ sealed class NotesIntent {
   object CreateNote: NotesIntent()
   object ToggleTheme: NotesIntent()
   object ToggleDialog: NotesIntent()
+  object CheckPassword: NotesIntent()
   data class ViewNote(val id: Int): NotesIntent()
   data class UpdateText(val text: String): NotesIntent()
   data class UpdateTitle(val title: String): NotesIntent()
@@ -71,10 +74,16 @@ class NotesViewModel(
       is NotesIntent.UpdatePassword -> {
         state.update { it.copy(password = action.password) }
       }
+      is NotesIntent.CheckPassword -> checkPassword()
       is NotesIntent.CreateNote -> createNewNote()
       is NotesIntent.DeleteNote -> deleteNote()
       is NotesIntent.ToggleTheme -> toggleTheme()
     }
+  }
+
+  private fun checkPassword() = viewModelScope.launch(ioDispatcher) {
+    val correct = state.value.password == "777"
+    state.update { it.copy(navigateHome = correct, showPasswordError = correct.not()) }
   }
 
   private fun toggleTheme() {
